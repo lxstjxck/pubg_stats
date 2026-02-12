@@ -1,4 +1,5 @@
-﻿const params = new URLSearchParams(location.search);
+﻿//overlay
+const params = new URLSearchParams(location.search);
 const platform = params.get("platform") || "steam";
 const player = params.get("player") || "";
 const mode = params.get("mode") || "squad-fpp";

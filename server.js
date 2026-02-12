@@ -5,7 +5,6 @@ const PORT = process.env.PORT || 3000;
 
 // 1) Получите ключ на PUBG Developer Portal, затем задайте переменной окружения:
 // Windows (PowerShell): setx PUBG_API_KEY "ваш_ключ"
-// macOS/Linux: export PUBG_API_KEY="ваш_ключ"
 const API_KEY = process.env.PUBG_API_KEY;
 if (!API_KEY) {
   console.error("ERROR: Set PUBG_API_KEY env var.");
