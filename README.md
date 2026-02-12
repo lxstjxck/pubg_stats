@@ -80,4 +80,3 @@ http://localhost:3000/overlay.html?platform=steam&player=<player>&mode=<mode>&re
 
 - Не коммить API ключ в код и README
 - Лучше добавить `.env`/секреты в локальные переменные окружения
-- `node_modules` не нужно хранить в Git
