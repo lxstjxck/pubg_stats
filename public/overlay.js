@@ -3,7 +3,6 @@ const platform = params.get("platform") || "steam";
 const player = params.get("player") || "";
 const mode = params.get("mode") || "squad-fpp";
 
-// Update interval: 60s by default (aligned with server cache).
 const REFRESH_MS = Number(params.get("refresh") || 60000);
 
 const line1 = document.getElementById("line1");

@@ -1,4 +1,3 @@
-// server.js
 import express from "express";
 
 const app = express();
@@ -21,7 +20,7 @@ const HEADERS = {
   "Accept": "application/vnd.api+json",
 };
 
-const cache = new Map(); // простейший in-memory cache
+const cache = new Map();
 
 function cacheGet(key) {
   const v = cache.get(key);
@@ -53,9 +52,6 @@ async function pubgFetch(url) {
   return res.json();
 }
 
-// GET /api/ranked?platform=steam&player=NickName&mode=squad-fpp
-// platform: steam | psn | xbox | kakao | stadia (и т.п. — как в PUBG docs)
-// mode: squad-fpp | squad | solo-fpp | solo | duo-fpp | duo (что вам нужно)
 app.get("/api/ranked", async (req, res) => {
   try {
     const platform = (req.query.platform || "steam").toString();
@@ -93,7 +89,6 @@ app.get("/api/ranked", async (req, res) => {
     const rankedUrl = `${PUBG_BASE}/shards/${platform}/players/${playerId}/seasons/${seasonId}/ranked`;
     const rankedJson = await pubgFetch(rankedUrl);
 
-    // Обычно ranked stats лежат в data.attributes.rankedGameModeStats[mode]
     const statsByMode = rankedJson?.data?.attributes?.rankedGameModeStats || {};
     const m = statsByMode?.[mode];
     if (!m) {
@@ -103,8 +98,6 @@ app.get("/api/ranked", async (req, res) => {
       });
     }
 
-    // поля часто встречаются такие:
-    // currentTier, currentSubTier, currentRankPoint, roundsPlayed, avgRank, top10Ratio, wins, kda, etc.
     const payload = {
       player: playerName,
       platform,
@@ -120,7 +113,6 @@ app.get("/api/ranked", async (req, res) => {
       updatedAt: new Date().toISOString(),
     };
 
-    // IMPORTANT: PUBG ключи по умолчанию часто лимитированы (примерно 10 req/min), поэтому кэшируем.
     cacheSet(cacheKey, payload, 60 * 1000); // обновление раз в минуту
     res.json(payload);
   } catch (e) {
