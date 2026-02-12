@@ -66,7 +66,7 @@ http://localhost:3000/overlay.html?platform=steam&player=YOUR_NICK&mode=duo-fpp
 Пример:
 
 ```text
-http://localhost:3000/overlay.html?platform=steam&player=des0ut&mode=duo-fpp&refresh=60000
+http://localhost:3000/overlay.html?platform=steam&player=<player>&mode=<mode>&refresh=60000
 ```
 
 ## Добавление в OBS
