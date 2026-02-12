@@ -76,32 +76,6 @@ http://localhost:3000/overlay.html?platform=steam&player=des0ut&mode=duo-fpp&ref
 3. Включить прозрачный фон (он уже прозрачный в CSS)
 4. Настроить ширину/высоту под сцену
 
-## Выгрузка на GitHub
-
-Если репозиторий еще не инициализирован:
-
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-```
-
-Создай пустой репозиторий на GitHub и привяжи remote:
-
-```bash
-git branch -M main
-git remote add origin https://github.com/<your_user>/<repo_name>.git
-git push -u origin main
-```
-
-Если remote уже есть, просто отправь изменения:
-
-```bash
-git add .
-git commit -m "Update overlay and docs"
-git push
-```
-
 ## Важно
 
 - Не коммить API ключ в код и README
