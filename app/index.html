@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PUBG Ranked Overlay</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <section class="panel">
+      <header class="header">
+        <div>
+          <p class="eyebrow">OBS browser overlay</p>
+          <h1>PUBG Ranked Overlay</h1>
+        </div>
+        <div id="serverStatus" class="status">Checking...</div>
+      </header>
+
+      <form id="settingsForm" class="form">
+        <label>
+          <span>PUBG API key</span>
+          <input id="apiKey" type="password" autocomplete="off" placeholder="Paste key to save or leave empty to keep current key" />
+          <small id="apiKeyHint">Stored locally on this computer.</small>
+        </label>
+
+        <div class="grid">
+          <label>
+            <span>Platform</span>
+            <select id="platform">
+              <option value="steam">steam</option>
+              <option value="kakao">kakao</option>
+              <option value="psn">psn</option>
+              <option value="xbox">xbox</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Mode</span>
+            <select id="mode">
+              <option value="tpp-duo">TPP Duo</option>
+              <option value="tpp-squad">TPP Squad</option>
+              <option value="fpp-duo">FPP Duo</option>
+              <option value="fpp-squad">FPP Squad</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="grid">
+          <label>
+            <span>Player nickname</span>
+            <input id="player" type="text" autocomplete="off" placeholder="YOUR_NICK" />
+          </label>
+
+          <label>
+            <span>Refresh interval, ms</span>
+            <input id="refresh" type="number" min="15000" step="1000" value="60000" />
+          </label>
+        </div>
+
+        <label>
+          <span>Local server port</span>
+          <input id="port" type="number" min="1024" max="65535" value="3000" />
+        </label>
+
+        <div class="actions">
+          <button type="submit">Save settings</button>
+          <button id="copyLink" type="button" class="secondary">Copy OBS URL</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>OBS URL</h2>
+      <div id="obsUrl" class="url"></div>
+      <iframe id="preview" title="Overlay preview"></iframe>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

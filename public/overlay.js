@@ -2,7 +2,7 @@
 const params = new URLSearchParams(location.search);
 const platform = params.get("platform") || "steam";
 const player = params.get("player") || "";
-const mode = params.get("mode") || "squad-fpp";
+const mode = params.get("mode") || "fpp-squad";
 
 const REFRESH_MS = Number(params.get("refresh") || 60000);
 
@@ -50,7 +50,37 @@ function formatRP(value) {
 
 function formatMode(value) {
   if (!value) return "Unknown mode";
-  return value.replace(/-/g, " ");
+  const labels = {
+    "tpp-duo": "TPP Duo",
+    "tpp-squad": "TPP Squad",
+    "fpp-duo": "FPP Duo",
+    "fpp-squad": "FPP Squad",
+    duo: "TPP Duo",
+    squad: "TPP Squad",
+    "duo-fpp": "FPP Duo",
+    "squad-fpp": "FPP Squad",
+  };
+  return labels[value] || value.replace(/-/g, " ");
+}
+
+function formatError(payload, fallback) {
+  const code = payload?.code || "ERROR";
+  const message = payload?.message || payload?.error || fallback || "Unknown error";
+  const details = [];
+
+  if (payload?.player) details.push(`Player: ${payload.player}`);
+  if (payload?.mode) details.push(`Mode: ${formatMode(payload.mode)}`);
+  if (Array.isArray(payload?.availableModes) && payload.availableModes.length > 0) {
+    details.push(`Available: ${payload.availableModes.map(formatMode).join(", ")}`);
+  }
+  if (Array.isArray(payload?.allowedModes) && payload.allowedModes.length > 0) {
+    details.push(`Use: ${payload.allowedModes.map(formatMode).join(", ")}`);
+  }
+  if (payload?.details && details.length === 0) {
+    details.push(String(payload.details).slice(0, 120));
+  }
+
+  return { code, message, details: details.join(" | ") };
 }
 
 async function tick() {
@@ -67,9 +97,10 @@ async function tick() {
     const j = await r.json();
 
     if (!r.ok) {
-      line1.textContent = "API Error";
-      line2.textContent = j.error || "Unknown error";
-      line3.textContent = Array.isArray(j.availableModes) ? `Modes: ${j.availableModes.join(", ")}` : "";
+      const error = formatError(j, `HTTP ${r.status}`);
+      line1.textContent = error.code;
+      line2.textContent = error.message;
+      line3.textContent = error.details;
       return;
     }
 
